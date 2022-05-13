@@ -74,6 +74,9 @@ onMounted(() => {
   *********** END PART 1 CALLING FUNCTION ************
   */
 
+  /*
+  *********** START PART 3 ************
+  */
   const outOfStockNotOnSaleUnder20: string[] = []
 
   let mostCommonlyUsedCategory = ''
@@ -96,15 +99,17 @@ onMounted(() => {
     // Get rid of dollar sign and comma
     const priceNormalized = parseFloat(price.replace(/,/g, '').substring(1))
 
+    // Not in stock, not on sale and price is less than 20
     if (!in_stock && !on_sale && priceNormalized < 20) {
       outOfStockNotOnSaleUnder20.push(name)
     }
 
     categoriesArr.push(...categories)
 
-    priceCount += parseFloat(price.substring(1))
+    priceCount += priceNormalized
     totalItemsCount++
 
+    // Female and out of stock
     if (gender === 'female' && !in_stock) {
       if (!Object.hasOwn(womensProductsOutOfStockByColor, color)) {
         womensProductsOutOfStockByColor[color] = 0
@@ -128,4 +133,7 @@ onMounted(() => {
   console.log(`3. What is the average price of sale items? ${averagePriceSaleItemsString}`)
   console.log(`4. How many women's products are out of stock, broken down by color? ${JSON.stringify(womensProductsOutOfStockByColor)}`)
 })
+/*
+*********** End PART 3 ************
+*/
 </script>
