@@ -84,8 +84,8 @@ onMounted(() => {
 
   let averagePriceSaleItems = 0
   let averagePriceSaleItemsString = ''
-  let priceTotal = 0
-  let productsLength = products.length
+  let pricesOnSaleTotal = 0
+  let pricesOnSaleCount = 0
 
   let womensProductsOutOfStockByColor: { [key: string | symbol]: any } = {}
 
@@ -107,7 +107,11 @@ onMounted(() => {
 
     categoriesArr.push(...categories)
 
-    priceTotal += priceNormalized
+    // Prices on sale
+    if (on_sale) {
+      pricesOnSaleTotal += priceNormalized
+      pricesOnSaleCount++
+    }
 
     // Female and out of stock
     if (gender === 'female' && !in_stock) {
@@ -121,7 +125,7 @@ onMounted(() => {
 
   mostCommonlyUsedCategory = mostFrequentItemArray(categoriesArr)
 
-  averagePriceSaleItems = priceTotal / productsLength
+  averagePriceSaleItems = pricesOnSaleTotal / pricesOnSaleCount
 
   // Add dollar string formatting
   averagePriceSaleItemsString = new Intl.NumberFormat('en-US', {
