@@ -84,11 +84,12 @@ onMounted(() => {
 
   let averagePriceSaleItems = 0
   let averagePriceSaleItemsString = ''
-  let priceCount = 0
-  let totalItemsCount = 0
+  let priceTotal = 0
+  let productsLength = products.length
 
   let womensProductsOutOfStockByColor: { [key: string | symbol]: any } = {}
 
+  // Gets the most frequent item in array
   const mostFrequentItemArray = ((array: string[]) => {
     return array.sort((a, b) =>
       array.filter(c => c === a).length - array.filter(c => c === b).length
@@ -106,8 +107,7 @@ onMounted(() => {
 
     categoriesArr.push(...categories)
 
-    priceCount += priceNormalized
-    totalItemsCount++
+    priceTotal += priceNormalized
 
     // Female and out of stock
     if (gender === 'female' && !in_stock) {
@@ -121,8 +121,9 @@ onMounted(() => {
 
   mostCommonlyUsedCategory = mostFrequentItemArray(categoriesArr)
 
-  averagePriceSaleItems = priceCount / totalItemsCount
+  averagePriceSaleItems = priceTotal / productsLength
 
+  // Add dollar string formatting
   averagePriceSaleItemsString = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -132,8 +133,8 @@ onMounted(() => {
   console.log(`2. What is the most commonly used category? ${mostCommonlyUsedCategory}`)
   console.log(`3. What is the average price of sale items? ${averagePriceSaleItemsString}`)
   console.log(`4. How many women's products are out of stock, broken down by color? ${JSON.stringify(womensProductsOutOfStockByColor)}`)
+  /*
+  *********** End PART 3 ************
+  */
 })
-/*
-*********** End PART 3 ************
-*/
 </script>
